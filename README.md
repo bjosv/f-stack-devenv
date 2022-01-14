@@ -79,5 +79,15 @@ cc1: all warnings being treated as errors
 make[1]: *** [<builtin>: nhops.o] Error 1
 ```
 
+### Other
+
+#### Run DPDK in virtualbox (6.1.26 Ubuntu)
+
+```
+cd vm
+vagrant up
+vagrant ssh
+```
+
 ## Links
 https://github.com/F-Stack/f-stack/blob/dev/doc/F-Stack_Build_Guide.md

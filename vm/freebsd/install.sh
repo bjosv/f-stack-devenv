@@ -5,6 +5,12 @@ set -x
 # Install deps
 pkg install -y git
 
+# Setup env.
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+
 # Get source (~7min)
 git clone -b stable/13 https://git.freebsd.org/src.git /usr/src
 cd /usr/src

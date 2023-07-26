@@ -4,6 +4,8 @@ set -x
 
 # Install deps
 pkg install -y git
+pkg install -y lang/gcc
+hash -r
 
 # Setup env.
 git config --global alias.co checkout

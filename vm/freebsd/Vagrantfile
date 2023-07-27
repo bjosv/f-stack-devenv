@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
   end
   # Requires the disksize plugin. Run in shell on host:
   # vagrant plugin install vagrant-disksize
-  config.disksize.size = "25GB"
+  config.disksize.size = "32GB"
 
   config.vm.provision "shell", path: "install.sh"
 end

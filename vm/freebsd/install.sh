@@ -36,7 +36,7 @@ git config pull.ff only
 
 ## Use the new compiler residing in /usr/obj to build the new kernel, and install it
 ## ~6min, uses ~3GB
-# make -j8 kernel
+# make -j8 buildkernel
 
 ## ~2min
 # make installworld

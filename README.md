@@ -5,7 +5,8 @@
 ### Install deps
 ```
 sudo apt-get install make meson git
-sudo apt-get install git gcc openssl libssl-dev linux-headers-$(uname -r) bc libnuma1 libnuma-dev libpcre3 libpcre3-dev zlib1g-dev python
+sudo apt-get install gcc openssl libssl-dev linux-headers-$(uname -r) bc libnuma1 libnuma-dev libpcre3 libpcre3-dev zlib1g-dev python
+sudo apt-get install -y python3-pyelftools python-pyelftools
 ```
 
 ### Prepare source
@@ -84,9 +85,13 @@ make[1]: *** [<builtin>: nhops.o] Error 1
 #### Run DPDK in virtualbox (6.1.26 Ubuntu)
 
 ```
-cd vm
+cd vm/dpdk/
 vagrant up
 vagrant ssh
+cd dpdk-21.11/examples/helloworld/
+make
+sudo ./build/helloworld --log-level lib.eal:debug
+(Probing takes ~2 minutes... ??)
 ```
 
 ## Links

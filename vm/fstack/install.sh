@@ -26,7 +26,8 @@ sed -i 's/pci_intx_mask_supported/true || pci_intx_mask_supported/' f-stack/dpdk
 
 
 ################################################################################
-# Build and install DPDK (20.11.0(LTS))
+# Build and install DPDK
+# Currently 20.11.0(LTS) with igb_uio added
 ################################################################################
 cd ${FSTACK}/dpdk
 meson -Denable_kmods=true build

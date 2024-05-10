@@ -4,9 +4,11 @@
 
 ### Install deps
 ```
-sudo apt-get install make meson git
-sudo apt-get install gcc openssl libssl-dev linux-headers-$(uname -r) bc libnuma1 libnuma-dev libpcre3 libpcre3-dev zlib1g-dev python
-sudo apt-get install -y python3-pyelftools python-pyelftools
+sudo apt-get install -y make meson git gcc
+sudo apt-get install -y openssl libssl-dev
+sudo apt-get install -y linux-headers-$(uname -r) bc libnuma1 libnuma-dev libpcre3 libpcre3-dev zlib1g-dev
+
+pip3 install pyelftools --upgrade
 ```
 
 ### Prepare source
@@ -21,20 +23,30 @@ sed -i 's/pci_intx_mask_supported/true || pci_intx_mask_supported/' f-stack/dpdk
 
 ### DPDK
 ```
-cd f-stack/dpdk
+# For branch 1.21: using Make and a target directory (always uses gcc?)
+make -C dpdk V=1 install T=x86_64-native-linuxapp-gcc
 
-meson -Denable_kmods=true build
+# For dev branch: create build files in directory 'build'
+cd dpdk
+meson -Denable_kmods=true -Ddisable_libs=flow_classify build
 ninja -C build
 sudo ninja -C build install
 ```
 
 ### f-stack lib
 ```
+# For branch 1.21
 cd f-stack
 export FF_PATH=$(pwd)
-export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+export FF_DPDK=$(pwd)/dpdk/x86_64-native-linuxapp-gcc
+CC=gcc-14 CXX=g++-14 make -C lib
 
-make -C lib
+# For dev branch:
+cd f-stack
+export FF_PATH=$(pwd)
+export PKG_CONFIG_PATH=/usr/local/lib/x86_64-linux-gnu/pkgconfig
+CC=gcc-14 CXX=g++-14 make -C lib
+
 sudo FF_PATH=$(pwd) PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig make -C lib install
 ```
 
@@ -93,6 +105,18 @@ make
 sudo ./build/helloworld --log-level lib.eal:debug
 (Probing takes ~2 minutes... ??)
 ```
+
+## Deps
+### FreeBSD
+v1.22 - Upgrade to FreeBSD-releng-13.0
+v1.20 - Changeset from Freebsd releng-11.0/release-11.1/release-11.2/release-11.3/release-12
+
+### DPDK
+dev     22.11.3
+1.23    21.11.5
+1.22.1  20.11.9
+1.22    20.11.6
+1.21.3  19.11.14 (branch 1.21)
 
 ## Links
 https://github.com/F-Stack/f-stack/blob/dev/doc/F-Stack_Build_Guide.md
